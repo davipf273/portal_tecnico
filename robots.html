@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Catálogo de Robôs Industriais – Portal Técnico</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">
+      <div class="nav-logo-icon">⚙</div>
+      Portal<span>Técnico</span>
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">⌂ Home</a></li>
+      <li><a href="robots.html" class="active">⚙ Catálogo de Robôs</a></li>
+      <li><a href="sensors.html">⚡ Sensores IoT</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="container">
+    <h1>Catálogo de Robôs Industriais</h1>
+    <p>Sete arquiteturas de robôs industriais com especificações técnicas, princípios de funcionamento, aplicações e integração IoT.</p>
+  </div>
+</div>
+
+<main class="container">
+
+  <!-- CARDS -->
+  <div class="grid-3" id="robots-grid"></div>
+
+  <!-- COMPARATIVE TABLE -->
+  <section class="section" style="padding-top: 2rem;">
+    <div class="section-head">
+      <h2>Tabela Comparativa</h2>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Tipo de Robô</th>
+            <th>Velocidade</th>
+            <th>Carga Útil</th>
+            <th>Precisão</th>
+            <th>Custo Relativo</th>
+            <th>Complexidade</th>
+          </tr>
+        </thead>
+        <tbody id="robots-table"></tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>Portal Técnico &mdash; Robótica Industrial &amp; Sensores IoT<br>
+  Curso de <span>Internet das Coisas</span> &mdash; SENAI Santa Catarina</p>
+</footer>
+
+<script src="js/data.js"></script>
+<script>
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('nav-links').classList.toggle('open');
+  });
+
+  const grid = document.getElementById('robots-grid');
+  const tbody = document.getElementById('robots-table');
+
+  robots.forEach(r => {
+    grid.innerHTML += `
+      <div class="card">
+        <img class="card-img" src="${r.image}" alt="${r.name}" />
+        <div class="card-body">
+          <div class="card-badge">Robô Industrial</div>
+          <div class="card-title">${r.name}</div>
+          <div class="card-desc">${r.concept}</div>
+          <a class="card-link" href="robot-detail.html?id=${r.id}">Ver especificações →</a>
+        </div>
+      </div>`;
+
+    tbody.innerHTML += `
+      <tr>
+        <td><a href="robot-detail.html?id=${r.id}">${r.name}</a></td>
+        <td>${r.specs.speed}</td>
+        <td>${r.specs.payload}</td>
+        <td><span class="tag">${r.specs.precision}</span></td>
+        <td>${r.specs.relativeCost}</td>
+        <td>${r.specs.implementationComplexity}</td>
+      </tr>`;
+  });
+</script>
+</body>
+</html>

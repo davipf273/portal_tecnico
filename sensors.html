@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Catálogo de Sensores IoT – Portal Técnico</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">
+      <div class="nav-logo-icon">⚙</div>
+      Portal<span>Técnico</span>
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">⌂ Home</a></li>
+      <li><a href="robots.html">⚙ Catálogo de Robôs</a></li>
+      <li><a href="sensors.html" class="active">⚡ Sensores IoT</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="container">
+    <h1>Catálogo de Sensores IoT</h1>
+    <p>Transdutores e módulos eletrônicos utilizados na Indústria 4.0 para coleta de dados físicos. Documentação completa com princípios de funcionamento, tipos de sinal e exemplos de código C++/Arduino.</p>
+  </div>
+</div>
+
+<main class="container">
+  <div class="grid-3" id="sensors-grid"></div>
+</main>
+
+<footer>
+  <p>Portal Técnico &mdash; Robótica Industrial &amp; Sensores IoT<br>
+  Curso de <span>Internet das Coisas</span> &mdash; SENAI Santa Catarina</p>
+</footer>
+
+<script src="js/data.js"></script>
+<script>
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('nav-links').classList.toggle('open');
+  });
+
+  const grid = document.getElementById('sensors-grid');
+  sensors.forEach(s => {
+    grid.innerHTML += `
+      <div class="card">
+        <div style="position:relative;">
+          <img class="card-img" src="${s.image}" alt="${s.name}" />
+          <span style="position:absolute;top:0.75rem;right:0.75rem;background:#111;color:#e8e8e8;font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;padding:0.2rem 0.5rem;border-radius:4px;">${s.signalType.split(' ')[0]}</span>
+        </div>
+        <div class="card-body">
+          <div class="card-badge">${s.category}</div>
+          <div class="card-title">${s.name}</div>
+          <div class="card-desc">${s.concept}</div>
+          <a class="card-link" href="sensor-detail.html?id=${s.id}">Ver manual técnico →</a>
+        </div>
+      </div>`;
+  });
+</script>
+</body>
+</html>

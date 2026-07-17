@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portal Técnico – Robótica Industrial & Sensores IoT</title>
+  <meta name="description" content="Catálogo técnico completo de robôs industriais e sensores IoT para automação e Indústria 4.0." />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">
+      <div class="nav-logo-icon">⚙</div>
+      Portal<span>Técnico</span>
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html" class="active">⌂ Home</a></li>
+      <li><a href="robots.html">⚙ Catálogo de Robôs</a></li>
+      <li><a href="sensors.html">⚡ Sensores IoT</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-badge">Base de Conhecimento Técnico</div>
+      <h1>Robótica Industrial<br>&amp; Sensores IoT</h1>
+      <p>A referência digital definitiva para estudantes de automação, clientes e engenheiros. Explore arquiteturas de robôs industriais e hardware de sensores IoT com dados técnicos precisos.</p>
+      <div class="hero-actions">
+        <a href="robots.html" class="btn btn-primary">⚙ Catálogo de Robôs</a>
+        <a href="sensors.html" class="btn btn-outline">⚡ Sensores &amp; IoT</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- O QUE É IOT + ROBÓTICA -->
+  <section class="section" style="background: #fff; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <div class="container">
+      <div class="info-grid">
+        <div class="info-card">
+          <h2><span class="icon">⚡</span> O que é a IoT</h2>
+          <p>Uma rede de dispositivos físicos (sensores, atuadores, controladores) incorporados com eletrônica, software e conectividade que permite coletar e trocar dados em tempo real.</p>
+          <p>Na indústria, a IoT conecta máquinas, sistemas de controle e plataformas de análise, criando a <strong>Indústria 4.0</strong>: manufatura inteligente, preditiva e altamente eficiente.</p>
+        </div>
+        <div class="info-card">
+          <h2><span class="icon">⚙</span> Robótica Industrial</h2>
+          <p>Máquinas programáveis com atuadores, sensores e controladores que executam tarefas com precisão, velocidade e repetibilidade superiores à capacidade humana em ambientes industriais.</p>
+          <p>Robôs industriais modernos são o núcleo da automação fabril, executando soldagem, pintura, montagem, paletização e processos de alta precisão com custo previsível.</p>
+        </div>
+        <div class="info-card">
+          <h2><span class="icon">🏭</span> Importância da Automação</h2>
+          <p>A automação industrial reduz erros, aumenta throughput, melhora a segurança do trabalhador e permite operação 24/7. É o motor da competitividade global na manufatura moderna.</p>
+          <p>Empresas que integram robôs e sensores IoT reportam reduções de custo operacional de 20-40% e aumentos de produtividade de 15-30% em média.</p>
+        </div>
+        <div class="info-card">
+          <h2><span class="icon">🔗</span> Robótica + IoT</h2>
+          <p>Quando robôs industriais integram sensores IoT, eles ganham percepção contextual: adaptam velocidade, força e rota em tempo real com base em dados do ambiente e da peça.</p>
+          <p>Essa fusão habilita manutenção preditiva, controle de qualidade automatizado por visão computacional e integração com sistemas MES/SCADA e nuvem industrial.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARDUINO & SENSING FOUNDATIONS -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2>Fundamentos de Sensoriamento</h2>
+      </div>
+      <div class="info-grid">
+        <div class="info-card">
+          <h2><span class="icon">📡</span> O que é um Sensor?</h2>
+          <p>Um sensor é um transdutor que converte uma grandeza física do mundo real (temperatura, pressão, luminosidade, movimento, distância) em um sinal elétrico mensurável — analógico (tensão/corrente) ou digital (binário/protocolo).</p>
+          <p>A cadeia de automação completa: <strong>Sensor → Microcontrolador → Atuador</strong>. O sensor é o órgão sensorial da máquina.</p>
+        </div>
+        <div class="info-card">
+          <h2><span class="icon">🔌</span> Arduino na Indústria IoT</h2>
+          <p>O Arduino é uma plataforma de prototipagem de microcontroladores com o ciclo <strong>setup()</strong> (inicialização única) e <strong>loop()</strong> (execução contínua), simplificando o desenvolvimento de sistemas embarcados.</p>
+          <p>Seus pinos suportam leitura analógica (ADC de 10 bits, 0-5V → 0-1023), I/O digital (5V lógico) e protocolos de comunicação (I2C, SPI, UART, 1-Wire) — base de todos os exemplos neste catálogo.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROBOTS PREVIEW -->
+  <section class="section" style="border-top: 1px solid var(--border);">
+    <div class="container">
+      <div class="section-head">
+        <h2>Robôs Industriais em Destaque</h2>
+        <a href="robots.html">Ver todos →</a>
+      </div>
+      <div class="grid-3" id="home-robots"></div>
+    </div>
+  </section>
+
+  <!-- SENSORS PREVIEW -->
+  <section class="section" style="border-top: 1px solid var(--border);">
+    <div class="container">
+      <div class="section-head">
+        <h2>Sensores IoT em Destaque</h2>
+        <a href="sensors.html">Ver todos →</a>
+      </div>
+      <div class="grid-3" id="home-sensors"></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>Portal Técnico &mdash; Robótica Industrial &amp; Sensores IoT<br>
+  Curso de <span>Internet das Coisas</span> &mdash; SENAI Santa Catarina</p>
+</footer>
+
+<script src="js/data.js"></script>
+<script>
+  // Hamburger
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('nav-links').classList.toggle('open');
+  });
+
+  // Render robot preview (3 cards)
+  const robotContainer = document.getElementById('home-robots');
+  robots.slice(0, 3).forEach(r => {
+    robotContainer.innerHTML += `
+      <div class="card">
+        <img class="card-img" src="${r.image}" alt="${r.name}" />
+        <div class="card-body">
+          <div class="card-badge">Robô Industrial</div>
+          <div class="card-title">${r.name}</div>
+          <div class="card-desc">${r.concept}</div>
+          <a class="card-link" href="robot-detail.html?id=${r.id}">Ver especificações →</a>
+        </div>
+      </div>`;
+  });
+
+  // Render sensor preview (3 cards)
+  const sensorContainer = document.getElementById('home-sensors');
+  sensors.slice(0, 3).forEach(s => {
+    sensorContainer.innerHTML += `
+      <div class="card">
+        <img class="card-img" src="${s.image}" alt="${s.name}" />
+        <div class="card-body">
+          <div class="card-badge">${s.category}</div>
+          <div class="card-title">${s.name}</div>
+          <div class="card-desc">${s.concept}</div>
+          <a class="card-link" href="sensor-detail.html?id=${s.id}">Ver manual técnico →</a>
+        </div>
+      </div>`;
+  });
+</script>
+</body>
+</html>

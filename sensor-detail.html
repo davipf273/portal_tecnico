@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sensor – Portal Técnico</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">
+      <div class="nav-logo-icon">⚙</div>
+      Portal<span>Técnico</span>
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">⌂ Home</a></li>
+      <li><a href="robots.html">⚙ Catálogo de Robôs</a></li>
+      <li><a href="sensors.html" class="active">⚡ Sensores IoT</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="container" style="padding-top:1.5rem; padding-bottom:3rem;">
+  <div class="breadcrumb">
+    <a href="sensors.html">← Sensores</a>
+    <span class="sep">/</span>
+    <span class="current" id="bc-name">…</span>
+  </div>
+
+  <div id="content"></div>
+</main>
+
+<footer>
+  <p>Portal Técnico &mdash; Robótica Industrial &amp; Sensores IoT<br>
+  Curso de <span>Internet das Coisas</span> &mdash; SENAI Santa Catarina</p>
+</footer>
+
+<script src="js/data.js"></script>
+<script>
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('nav-links').classList.toggle('open');
+  });
+
+  const params = new URLSearchParams(location.search);
+  const id = params.get('id');
+  const sensor = sensors.find(s => s.id === id);
+  const content = document.getElementById('content');
+
+  if (!sensor) {
+    content.innerHTML = `<div class="not-found"><h2>Sensor não encontrado</h2><p>O ID "${id}" não existe no catálogo.</p><a class="btn btn-primary" href="sensors.html">← Voltar ao catálogo</a></div>`;
+  } else {
+    document.title = `${sensor.name} – Portal Técnico`;
+    document.getElementById('bc-name').textContent = sensor.name;
+
+    // Build specs dl items
+    let specsHtml = '';
+    if (sensor.specs.range) {
+      specsHtml += `<div class="spec-item"><dt>Range de Medição</dt><dd>${sensor.specs.range}</dd></div>`;
+    }
+    if (sensor.specs.accuracy) {
+      specsHtml += `<div class="spec-item"><dt>Precisão</dt><dd>${sensor.specs.accuracy}</dd></div>`;
+    }
+    specsHtml += `<div class="spec-item" style="grid-column:span 2"><dt>Tensão de Operação</dt><dd class="highlight">${sensor.specs.operatingVoltage}</dd></div>`;
+    if (sensor.specs.other) {
+      specsHtml += `<div class="spec-item" style="grid-column:span 2"><dt>Detalhes Adicionais</dt><dd>${sensor.specs.other}</dd></div>`;
+    }
+
+    // Escape code for HTML
+    const safeCode = sensor.codeExample
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+
+    content.innerHTML = `
+      <div class="detail-layout">
+
+        <!-- LEFT COLUMN -->
+        <div>
+          <img class="detail-img" src="${sensor.image}" alt="${sensor.name}" />
+
+          <div class="detail-hero">
+            <div class="card-badge">${sensor.category}</div>
+            <h1>${sensor.name}</h1>
+            <div class="signal-badge">⚡ Sinal: ${sensor.signalType}</div>
+            <p class="subtitle">${sensor.concept}</p>
+          </div>
+
+          <div style="margin: 2rem 0;">
+            <div class="section-title">Princípio de Funcionamento</div>
+            <div class="principle-box">${sensor.workingPrinciple}</div>
+          </div>
+
+          <!-- Code Example -->
+          <div class="code-block-wrap">
+            <div class="code-header">
+              <span>💻</span>
+              <span>Exemplo de Código – Arduino / C++</span>
+            </div>
+            <pre><code>${safeCode}</code></pre>
+          </div>
+        </div>
+
+        <!-- RIGHT SIDEBAR -->
+        <div>
+          <div class="specs-card">
+            <h3>📡 Especificações Técnicas</h3>
+            <dl class="specs-grid">${specsHtml}</dl>
+
+            <div class="sidebar-section">
+              <h3>Aplicações Principais</h3>
+              <ul class="app-list">${sensor.applications.map(a => `<li>${a}</li>`).join('')}</ul>
+            </div>
+
+            <div class="sidebar-section">
+              <h3>Modelos Comerciais</h3>
+              <div class="model-tags">${sensor.models.map(m => `<span class="model-tag">${m}</span>`).join('')}</div>
+            </div>
+          </div>
+
+          <div style="margin-top:1rem;">
+            <a href="sensors.html" class="btn btn-outline" style="width:100%;justify-content:center;">← Voltar ao catálogo</a>
+          </div>
+        </div>
+      </div>`;
+  }
+</script>
+</body>
+</html>
