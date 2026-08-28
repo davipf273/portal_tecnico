@@ -20,6 +20,7 @@
       <li><a href="index.html" class="active">⌂ Home</a></li>
       <li><a href="robots.html">⚙ Catálogo de Robôs</a></li>
       <li><a href="sensors.html">⚡ Sensores IoT</a></li>
+      <li><a href="desafios.html">🎯 Desafios & Vídeos</a></li>
     </ul>
   </div>
 </nav>
@@ -107,6 +108,15 @@
       </div>
       <div class="grid-3" id="home-sensors"></div>
     </div>
+  <!-- CHALLENGES PREVIEW -->
+  <section class="section" style="border-top: 1px solid var(--border);">
+    <div class="container">
+      <div class="section-head">
+        <h2>Desafios Práticos</h2>
+        <a href="desafios.html">Ver desafios →</a>
+      </div>
+      <div class="challenge-grid" id="home-challenges"></div>
+    </div>
   </section>
 </main>
 
@@ -116,6 +126,7 @@
 </footer>
 
 <script src="js/data.js"></script>
+<script src="js/challenges.js"></script>
 <script>
   // Hamburger
   document.getElementById('hamburger').addEventListener('click', () => {
@@ -148,6 +159,21 @@
           <div class="card-title">${s.name}</div>
           <div class="card-desc">${s.concept}</div>
           <a class="card-link" href="sensor-detail.html?id=${s.id}">Ver manual técnico →</a>
+        </div>
+      </div>`;
+  });
+  // Render challenge preview (3 cards)
+  const challengeContainer = document.getElementById('home-challenges');
+  challenges.slice(0, 3).forEach(c => {
+    challengeContainer.innerHTML += `
+      <div class="challenge-card">
+        <div class="challenge-body">
+          <div class="challenge-icon">${c.icon}</div>
+          <h3 class="challenge-title">${c.shortTitle}</h3>
+          <p class="challenge-summary">${c.summary}</p>
+          <div class="challenge-actions">
+            <a class="btn btn-primary" href="desafio-detail.html?id=${c.id}">Ver entrega</a>
+          </div>
         </div>
       </div>`;
   });

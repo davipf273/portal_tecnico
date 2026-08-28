@@ -1,0 +1,12 @@
+PASTA DE IMAGENS DOS CIRCUITOS
+==============================
+
+Salve aqui os prints dos circuitos montados no Tinkercad.
+
+Nomes esperados (conforme js/challenges.js):
+  images/circuitos/iluminacao.png
+  images/circuitos/estacionamento.png
+  images/circuitos/ambiente.png
+
+Use PNG com fundo branco para melhor visualização.
+Se não tiver a imagem, o site mostrará um aviso elegante no lugar.

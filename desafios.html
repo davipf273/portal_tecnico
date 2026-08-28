@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Desafios & Vídeos – Portal Técnico</title>
+  <meta name="description" content="Três desafios práticos de IoT com circuitos, códigos Arduino e vídeos demonstrativos." />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">
+      <div class="nav-logo-icon">⚙</div>
+      Portal<span>Técnico</span>
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">⌂ Home</a></li>
+      <li><a href="robots.html">⚙ Catálogo de Robôs</a></li>
+      <li><a href="sensors.html">⚡ Sensores IoT</a></li>
+      <li><a href="desafios.html" class="active">🎯 Desafios & Vídeos</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="container">
+    <h1>Desafios & Vídeos</h1>
+    <p>Três desafios práticos de IoT: iluminação, estacionamento e ambiente inteligente. Cada desafio conta com circuito, código Arduino e um vídeo demonstrativo.</p>
+  </div>
+</div>
+
+<main class="container">
+  <div class="breadcrumb">
+    <a href="index.html">Home</a>
+    <span class="sep">›</span>
+    <span class="current">Desafios & Vídeos</span>
+  </div>
+
+  <div class="challenge-grid" id="challenge-grid"></div>
+</main>
+
+<footer>
+  <p>Portal Técnico &mdash; Robótica Industrial &amp; Sensores IoT<br>
+  Curso de <span>Internet das Coisas</span> &mdash; SENAI Santa Catarina</p>
+</footer>
+
+<script src="js/challenges.js"></script>
+<script src="js/video.js"></script>
+<script>
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('nav-links').classList.toggle('open');
+  });
+
+  const grid = document.getElementById('challenge-grid');
+
+  challenges.forEach(c => {
+    const card = document.createElement('div');
+    card.className = 'challenge-card';
+    card.innerHTML = `
+      <div class="challenge-video" id="video-${c.id}"></div>
+      <div class="challenge-body">
+        <div class="challenge-icon">${c.icon}</div>
+        <h2 class="challenge-title">${c.shortTitle}</h2>
+        <p class="challenge-summary">${c.summary}</p>
+        <div class="challenge-actions">
+          <a href="desafio-detail.html?id=${c.id}" class="btn btn-primary">Ver entrega completa</a>
+        </div>
+      </div>
+    `;
+    grid.appendChild(card);
+
+    renderVideo(`#video-${c.id}`, c.video);
+  });
+</script>
+</body>
+</html>

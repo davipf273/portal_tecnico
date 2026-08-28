@@ -619,3 +619,130 @@ footer span { color: var(--primary); }
   .grid-3 { grid-template-columns: 1fr; }
   .section { padding: 2.5rem 0; }
 }
+
+/* ===== CHALLENGES & VIDEOS ===== */
+.challenge-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.challenge-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.challenge-card:hover { transform: translateY(-3px); box-shadow: 0 2px 8px rgba(0,0,0,0.1), 0 8px 32px rgba(0,0,0,0.1); }
+
+.challenge-video { background: #111; aspect-ratio: 16 / 9; }
+
+.video-player, .video-embed, .video-embed iframe, .video-placeholder {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border: 0;
+}
+
+.video-player { background: #000; }
+
+.video-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: rgba(255,255,255,0.75);
+  background: #1a1a1a;
+  padding: 1.5rem;
+}
+
+.video-placeholder-icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+
+.video-placeholder p { font-size: 0.9rem; margin-bottom: 0.5rem; }
+.video-placeholder small { font-size: 0.75rem; color: rgba(255,255,255,0.5); }
+.video-placeholder code { color: var(--primary); }
+
+.challenge-body { padding: 1.5rem; display: flex; flex-direction: column; flex: 1; }
+.challenge-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+.challenge-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text); }
+.challenge-summary { font-size: 0.875rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 1.25rem; flex: 1; }
+.challenge-actions { margin-top: auto; }
+
+.video-wrapper { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); background: #111; aspect-ratio: 16 / 9; margin-bottom: 0.75rem; }
+.video-caption { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 2rem; }
+
+.circuit-frame { position: relative; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: #f9f9f9; min-height: 240px; }
+.circuit-frame img { width: 100%; height: auto; min-height: 240px; object-fit: contain; padding: 1rem; display: block; }
+.circuit-overlay {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: #f9f9f9;
+  color: var(--text-muted);
+  padding: 2rem;
+}
+.circuit-overlay p { font-size: 1rem; margin-bottom: 0.5rem; color: var(--text); }
+.circuit-overlay small { font-size: 0.85rem; }
+.circuit-overlay code { color: var(--primary); }
+
+.detail-section { margin-bottom: 2.5rem; }
+.detail-section:last-child { margin-bottom: 0; }
+
+.rule-list, .wiring-list, .check-list { list-style: none; }
+.rule-list li, .wiring-list li, .check-list li {
+  font-size: 0.95rem;
+  color: var(--text);
+  padding: 0.6rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+  border-bottom: 1px solid var(--border);
+}
+.rule-list li:last-child, .wiring-list li:last-child, .check-list li:last-child { border-bottom: none; }
+.rule-list li::before, .wiring-list li::before, .check-list li::before { content: '✓'; position: absolute; left: 0; color: var(--primary); font-weight: 700; }
+.rule-list li::before { content: '→'; }
+
+.code-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.copy-code {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.copy-code:hover { background: var(--bg); border-color: #c0c0c0; }
+
+.detail-sidebar .specs-card { margin-bottom: 1.5rem; }
+.sidebar-text { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; }
+.sidebar-text code { color: var(--primary); font-size: 0.8rem; }
+
+@media (max-width: 640px) {
+  .challenge-grid { grid-template-columns: 1fr; }
+  .video-wrapper { aspect-ratio: 16 / 10; }
+}
+

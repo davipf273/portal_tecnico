@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Desafio – Portal Técnico</title>
+  <meta name="description" content="Entrega completa de um desafio prático de IoT: circuito, código Arduino, componentes e vídeo demonstrativo." />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">
+      <div class="nav-logo-icon">⚙</div>
+      Portal<span>Técnico</span>
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">⌂ Home</a></li>
+      <li><a href="robots.html">⚙ Catálogo de Robôs</a></li>
+      <li><a href="sensors.html">⚡ Sensores IoT</a></li>
+      <li><a href="desafios.html" class="active">🎯 Desafios & Vídeos</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="container">
+    <h1 id="page-title">Carregando desafio...</h1>
+    <p id="page-summary"></p>
+  </div>
+</div>
+
+<main class="container">
+  <div class="breadcrumb">
+    <a href="index.html">Home</a>
+    <span class="sep">›</span>
+    <a href="desafios.html">Desafios & Vídeos</a>
+    <span class="sep">›</span>
+    <span class="current" id="breadcrumb-title">...</span>
+  </div>
+
+  <div class="detail-layout">
+    <div class="detail-main">
+      <div class="video-wrapper" id="video-detail"></div>
+      <p class="video-caption" id="video-caption"></p>
+
+      <section class="detail-section">
+        <h2 class="section-title">Circuito no Tinkercad</h2>
+        <div class="circuit-frame">
+          <img id="circuit-img" src="" alt="Circuito do desafio" />
+          <div class="circuit-overlay" id="circuit-overlay" style="display:none;">
+            <p>🖼️ Imagem do circuito ainda não adicionada.</p>
+            <small>Salve o print do Tinkercad em <code id="circuit-path"></code>.</small>
+          </div>
+        </div>
+      </section>
+
+      <section class="detail-section">
+        <h2 class="section-title">Regras de Funcionamento</h2>
+        <ul class="rule-list" id="rule-list"></ul>
+      </section>
+
+      <section class="detail-section">
+        <h2 class="section-title">Ligações Pino a Pino</h2>
+        <ul class="wiring-list" id="wiring-list"></ul>
+      </section>
+
+      <section class="detail-section">
+        <div class="code-header-row">
+          <h2 class="section-title">Código Arduino</h2>
+          <button class="copy-code" id="copy-code" data-code="">📋 Copiar código</button>
+        </div>
+        <div class="code-block-wrap">
+          <div class="code-header"><span>ino</span></div>
+          <pre><code id="code-block"></code></pre>
+        </div>
+      </section>
+    </div>
+
+    <aside class="detail-sidebar">
+      <div class="specs-card">
+        <h3>🧰 Componentes</h3>
+        <ul class="app-list" id="component-list"></ul>
+      </div>
+      <div class="specs-card">
+        <h3>✅ Checklist de Entrega</h3>
+        <ul class="check-list" id="checklist">
+          <li>Circuito montado no Tinkercad</li>
+          <li>Código do Arduino</li>
+          <li>Vídeo demonstrativo</li>
+        </ul>
+      </div>
+      <div class="specs-card">
+        <h3>🎬 Vídeo</h3>
+        <p class="sidebar-text" id="video-sidebar-text">O vídeo deste desafio está logo acima. Substitua o arquivo em <code>videos/</code> ou configure o link em <code>js/challenges.js</code>.</p>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<footer>
+  <p>Portal Técnico &mdash; Robótica Industrial &amp; Sensores IoT<br>
+  Curso de <span>Internet das Coisas</span> &mdash; SENAI Santa Catarina</p>
+</footer>
+
+<script src="js/challenges.js"></script>
+<script src="js/video.js"></script>
+<script>
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('nav-links').classList.toggle('open');
+  });
+
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get('id');
+  const challenge = challenges.find(c => c.id === id);
+
+  if (!challenge) {
+    document.querySelector('main').innerHTML = `
+      <div class="not-found">
+        <h2>Desafio não encontrado</h2>
+        <p>Verifique o ID na URL ou volte para a lista de desafios.</p>
+        <a href="desafios.html" class="btn btn-primary">Ver desafios</a>
+      </div>`;
+    throw new Error('Desafio não encontrado');
+  }
+
+  document.title = `${challenge.title} – Portal Técnico`;
+  document.getElementById('page-title').textContent = `${challenge.icon} ${challenge.title}`;
+  document.getElementById('page-summary').textContent = challenge.summary;
+  document.getElementById('breadcrumb-title').textContent = challenge.shortTitle;
+
+  renderVideo('#video-detail', challenge.video);
+  document.getElementById('video-caption').textContent = challenge.video.caption || '';
+
+  // Circuit image
+  const circuitImg = document.getElementById('circuit-img');
+  const circuitOverlay = document.getElementById('circuit-overlay');
+  const circuitPath = document.getElementById('circuit-path');
+  circuitImg.src = challenge.circuitImage;
+  circuitPath.textContent = challenge.circuitImage;
+  circuitImg.onerror = () => {
+    circuitImg.style.display = 'none';
+    circuitOverlay.style.display = 'flex';
+  };
+
+  // Rules
+  const ruleList = document.getElementById('rule-list');
+  challenge.logic.forEach(rule => {
+    ruleList.innerHTML += `<li>${rule}</li>`;
+  });
+
+  // Wiring
+  const wiringList = document.getElementById('wiring-list');
+  challenge.wiring.forEach(w => {
+    wiringList.innerHTML += `<li>${w}</li>`;
+  });
+
+  // Components
+  const componentList = document.getElementById('component-list');
+  challenge.components.forEach(comp => {
+    componentList.innerHTML += `<li>${comp}</li>`;
+  });
+
+  // Code
+  const codeBlock = document.getElementById('code-block');
+  codeBlock.textContent = challenge.code;
+  document.getElementById('copy-code').setAttribute('data-code', challenge.code);
+
+  setupCodeCopy();
+</script>
+</body>
+</html>
