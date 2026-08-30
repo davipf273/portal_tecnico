@@ -23,56 +23,65 @@ const challenges = [
     circuitImage: "images/circuitos/iluminacao.png",
     code: `// Desafio 1 - Iluminação Inteligente
 
-// C++ code
-//
-const int trigPin = 12;
-const int echoPin = 11;
-const int ledPin = 10;
-const int potPin = A0;
-const int lumPin = A1;
-void setup()
-{
-  pinMode(trigPin, OUTPUT);
-  pinMode(echoPin, INPUT);
-  pinMode(ledPin, OUTPUT);
+const byte LED = 13;
+const byte PING = 7;
+const byte AJUSTE = A0;
+
+float medirDistancia() {
+
+  pinMode(PING, OUTPUT);
+
+  digitalWrite(PING, LOW);
+  delayMicroseconds(2);
+
+  digitalWrite(PING, HIGH);
+  delayMicroseconds(5);
+
+  digitalWrite(PING, LOW);
+
+  pinMode(PING, INPUT);
+
+  return pulseIn(PING, HIGH) / 58.0;
+}
+
+void setup() {
+  pinMode(LED, OUTPUT);
   Serial.begin(9600);
 }
-void loop()
-{
-  // Lê a luminosidade
-  int luminosidade = analogRead(A1);
 
-  // Dispara o sensor ultrassônico
-  digitalWrite(trigPin, LOW);
-  delayMicroseconds(2);
-  digitalWrite(trigPin, HIGH);
-  delayMicroseconds(10);
-  digitalWrite(trigPin, LOW);
+void loop() {
 
-  // Calcula a distância em centímetros
-  long duracao = pulseIn(echoPin, HIGH);
-  int distancia = duracao * 0.017;
-  // Comportamento do LED
-  mudarLed(distancia, 250, luminosidade);
+  int limite = map(analogRead(AJUSTE), 0, 1023, 20, 70);
+  float distancia = medirDistancia();
 
-  // Mostra os valores importantes no monitor serial
-  Serial.print("Distancia: ");
+  Serial.print("Leitura = ");
   Serial.print(distancia);
-  Serial.print("cm");
-  delay(200);
-}
-void mudarLed(int distancia, int limite, int luminosidade)
-{
+  Serial.print("cm | Configurado = ");
+  Serial.print(limite);
+  Serial.println("cm");
 
-  // Comportamento do LED
-  if (distancia <= limite) { // Se a distância for baixa,
-    if (luminosidade < 850) { // E tiver luz o suficiente,
-      digitalWrite(ledPin, HIGH); // O LED acende.
-    }else{
-      digitalWrite(ledPin, LOW); // Se não, apaga.
-    }
-  }else{
-      digitalWrite(ledPin, LOW);
+  if (distancia >= limite) {
+
+    digitalWrite(LED, LOW);
+    Serial.println("STATUS: LIVRE");
+
+  } 
+  else if (distancia >= limite * 0.45) {
+
+    digitalWrite(LED, HIGH);
+    delay(180);
+
+    digitalWrite(LED, LOW);
+    delay(180);
+
+    Serial.println("STATUS: ATENCAO");
+
+  } 
+  else {
+
+    digitalWrite(LED, HIGH);
+    Serial.println("STATUS: PARE");
+
   }
 }`,
     video: {
@@ -106,75 +115,91 @@ void mudarLed(int distancia, int limite, int luminosidade)
     ],
     circuitImage: "images/circuitos/estacionamento.png",
     code: `// Desafio 2 - Estacionamento Inteligente
-// C++ code
-//
+// Pinos dos LEDs
+const int LED_VERDE = 8;
+const int LED_VERMELHO = 9;
+const int LED_AMARELO = 10;
 
-const int trigPin = 12;
-const int echoPin = 11;
-const int ledPin = 10;
-const int potPin = A0;
+// Pinos dos sensores
+const int SENSOR_TEMP = A0;
+const int SENSOR_UMIDADE = A1;
 
-void setup()
-{
-  pinMode(trigPin, OUTPUT);
-  pinMode(echoPin, INPUT);
-  pinMode(ledPin, OUTPUT);
+// Valores de referência
+const float LIMITE_TEMP = 30.0;
+const int LIMITE_UMIDADE = 40;
+
+void setup() {
+
+  pinMode(LED_VERDE, OUTPUT);
+  pinMode(LED_VERMELHO, OUTPUT);
+  pinMode(LED_AMARELO, OUTPUT);
+
   Serial.begin(9600);
 }
 
-void loop()
-{
-  // Lê o potenciômetro e converte numa distância limite
-  int potValue = analogRead(potPin);
-  int limiteDistancia = map(potValue, 0, 1023, 2, 200);
-  
-  
-  // Dispara o sensor ultrassônico
-  digitalWrite(trigPin, LOW);
-  delayMicroseconds(2);
-  digitalWrite(trigPin, HIGH);
-  delayMicroseconds(10);
-  digitalWrite(trigPin, LOW);
-  
-  // Calcula a distância em centímetros
-  long duracao = pulseIn(echoPin, HIGH);
-  int distancia = duracao * 0.017;
+void loop() {
 
-  // Comportamento do LED
-  mudarLed(distancia, limiteDistancia);
+  // Leitura dos sensores
+  int leituraTemp = analogRead(SENSOR_TEMP);
+  int leituraUmidade = analogRead(SENSOR_UMIDADE);
   
-  // Mostra os valores importantes no monitor serial
-  Serial.print("Distancia: ");
-  Serial.print(distancia);
-  Serial.print("cm | Limite do potenciometro: ");
-  Serial.print(limiteDistancia);
-  Serial.println("cm");
-  
-  delay(150);
-}
+  Serial.print("Leitura bruta: ");
+  Serial.println(leituraUmidade);
 
-void mudarLed(int distancia, int limite)
-{
-    
-  // Comportamento do LED
-  if (distancia <= limite) {
-    if (distancia <= limite / 2) {
-      if (digitalRead(ledPin) == LOW){
-        digitalWrite(ledPin, HIGH);
-      }else{
-         digitalWrite(ledPin, LOW);
-      }
-    }else{
-      delay(250);
-      if (digitalRead(ledPin) == LOW){
-        digitalWrite(ledPin, HIGH);
-      }else{
-         digitalWrite(ledPin, LOW);
-      }
-    }
-  }else{
-  	digitalWrite(ledPin, LOW);
+  // Conversão da leitura do TMP para temperatura
+  float temperatura = (leituraTemp * 5.0 / 1023.0 - 0.5) * 100.0;
+
+  // Conversão da leitura do sensor de umidade para porcentagem
+  int umidade = map(leituraUmidade, 512, 880, 0, 100);
+  umidade = constrain(umidade, 0, 100);
+
+  // Verifica as condições
+  bool temperaturaAlta = temperatura > LIMITE_TEMP;
+  bool umidadeBaixa = umidade < LIMITE_UMIDADE;
+
+  // Primeiro desligamos todos os LEDs
+  digitalWrite(LED_VERDE, LOW);
+  digitalWrite(LED_VERMELHO, LOW);
+  digitalWrite(LED_AMARELO, LOW);
+
+  // Temperatura alta
+  if (temperaturaAlta) {
+    digitalWrite(LED_VERMELHO, HIGH);
   }
+
+  // Umidade baixa
+  if (umidadeBaixa) {
+    digitalWrite(LED_AMARELO, HIGH);
+  }
+
+  // Condição normal
+  if (!temperaturaAlta && !umidadeBaixa) {
+    digitalWrite(LED_VERDE, HIGH);
+  }
+
+  // Monitor Serial
+  Serial.print("Temperatura: ");
+  Serial.print(temperatura);
+  Serial.print(" C | Umidade: ");
+  Serial.print(umidade);
+  Serial.println("%");
+
+  if (temperaturaAlta && umidadeBaixa) {
+    Serial.println("ALERTA: Temperatura alta + Umidade baixa!");
+  }
+  else if (temperaturaAlta) {
+    Serial.println("ALERTA: Temperatura acima do limite!");
+  }
+  else if (umidadeBaixa) {
+    Serial.println("ALERTA: Umidade abaixo do limite!");
+  }
+  else {
+    Serial.println("AMBIENTE NORMAL");
+  }
+
+  Serial.println("-----------------------------");
+
+  delay(1000);
 }`,
     video: {
       title: "Vídeo do Estacionamento Inteligente",
@@ -206,70 +231,50 @@ void mudarLed(int distancia, int limite)
     ],
     circuitImage: "images/circuitos/ambiente.png",
     code: `// Desafio 3 - Ambiente Inteligente
-// C++ code
-//
-void setup()
-{
-  pinMode(A0, INPUT);
+const int pinoPIR = 2;
+const int pinoLDR = A0;
+const int pinoLED = 8;
+
+int limiteLuz = 500;
+
+void setup() {
+
+  pinMode(pinoPIR, INPUT);
+  pinMode(pinoLED, OUTPUT);
+
   Serial.begin(9600);
-  pinMode(A1, INPUT);
-  pinMode(11, OUTPUT);
-  pinMode(10, OUTPUT);
-  pinMode(9, OUTPUT);
-  pinMode(6, OUTPUT);
-  pinMode(5, OUTPUT);
-  pinMode(3, OUTPUT);
 }
 
-void loop()
-{
-  Serial.println((-40 + 0.488155 * (analogRead(A0) - 20)));
-  delay(1000); // Wait for 1000 millisecond(s)
-  Serial.println(analogRead(A1));
+void loop() {
 
-  delay(50); // Wait for 50 millisecond(s)
-  if ((-40 + 0.488155 * (analogRead(A0) - 20)) > 35) {
-    analogWrite(11, 204);
-    analogWrite(10, 0);
-    analogWrite(9, 0);
+  int movimento = digitalRead(pinoPIR);
+  int luminosidade = analogRead(pinoLDR);
+
+  bool escuro = luminosidade < limiteLuz;
+
+  if (movimento == HIGH && escuro) {
+
+    digitalWrite(pinoLED, HIGH);
+
+    Serial.println("Presenca detectada - ambiente escuro - LED LIGADO");
   }
-  if ((-40 + 0.488155 * (analogRead(A0) - 20)) > 26 && (-40 + 0.488155 * (analogRead(A0) - 20)) <= 35) {
-    analogWrite(11, 255);
-    analogWrite(10, 204);
-    analogWrite(9, 0);
-  }
-  if ((-40 + 0.488155 * (analogRead(A0) - 20)) >= 18 && (-40 + 0.488155 * (analogRead(A0) - 20)) <= 26) {
-    analogWrite(11, 51);
-    analogWrite(10, 255);
-    analogWrite(9, 51);
-  }
-  if ((-40 + 0.488155 * (analogRead(A0) - 20)) < 18 && (-40 + 0.488155 * (analogRead(A0) - 20)) > 0) {
-    analogWrite(11, 0);
-    analogWrite(10, 204);
-    analogWrite(9, 204);
-  }
-  if ((-40 + 0.488155 * (analogRead(A0) - 20)) <= 0) {
-    analogWrite(11, 102);
-    analogWrite(10, 255);
-    analogWrite(9, 255);
+  else {
+
+    digitalWrite(pinoLED, LOW);
+
+    Serial.println("LED DESLIGADO");
   }
 
-  delay(50); // Wait for 50 millisecond(s)
-  if (analogRead(A1) < 303) {
-    analogWrite(6, 255);
-    analogWrite(5, 0);
-    analogWrite(3, 0);
-  }
-  if (analogRead(A1) >= 303 && analogRead(A1) <= 563) {
-    analogWrite(6, 51);
-    analogWrite(5, 255);
-    analogWrite(3, 51);
-  }
-  if (analogRead(A1) > 563) {
-    analogWrite(6, 51);
-    analogWrite(5, 102);
-    analogWrite(3, 255);
-  }
+  Serial.print("Movimento: ");
+  Serial.print(movimento);
+
+  Serial.print(" | Luminosidade: ");
+  Serial.print(luminosidade);
+
+  Serial.print(" | Limite: ");
+  Serial.println(limiteLuz);
+
+  delay(500);
 }`,
     video: {
       title: "Vídeo do Ambiente Inteligente",
