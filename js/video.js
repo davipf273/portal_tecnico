@@ -72,7 +72,7 @@ function videoPlaceholder(message) {
 function extractYouTubeId(url) {
   if (!url) return null;
   if (/^[a-zA-Z0-9_-]{11}$/.test(url)) return url;
-  const m = url.match(/(?:v=|\/embed\/|\/youtu\.be\/|\/v\/|\/watch\?v=)([a-zA-Z0-9_-]{11})/);
+  const m = url.match(/(?:v=|\/embed\/|\/youtu\.be\/|\/v\/|\/shorts\/|\/watch\?v=)([a-zA-Z0-9_-]{11})/);
   return m ? m[1] : null;
 }
 
@@ -96,3 +96,4 @@ function setupCodeCopy() {
     });
   });
 }
+

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arduino & ESP – Portal Técnico</title>
+  <meta name="description" content="Vídeos práticos de Arduino e ESP: demonstrações dos desafios de IoT e projetos com ESP32." />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">
+      <div class="nav-logo-icon">⚙</div>
+      Portal<span>Técnico</span>
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">⌂ Home</a></li>
+      <li><a href="robots.html">⚙ Catálogo de Robôs</a></li>
+      <li><a href="sensors.html">⚡ Sensores IoT</a></li>
+      <li><a href="desafios.html">🎯 Desafios & Vídeos</a></li>
+      <li><a href="arduino-esp.html" class="active">🎬 Arduino & ESP</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="container">
+    <h1>Arduino & ESP</h1>
+    <p>Vídeos demonstrativos dos projetos com Arduino e ESP32: os três desafios práticos de IoT e um extra com ESP.</p>
+  </div>
+</div>
+
+<main class="container">
+  <div class="breadcrumb">
+    <a href="index.html">Home</a>
+    <span class="sep">›</span>
+    <span class="current">Arduino & ESP</span>
+  </div>
+
+  <section class="detail-section">
+    <h2 class="section-title">Projeto com ESP</h2>
+    <div class="video-grid">
+      <div class="video-card shorts-card">
+        <div id="video-esp"></div>
+        <div class="video-card-body">
+          <span class="video-card-tag">ESP</span>
+          <h2>Demonstração com ESP32</h2>
+          <p>Projeto prático utilizando a placa ESP.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="detail-section">
+    <h2 class="section-title">Desafios com Arduino</h2>
+    <div class="video-grid">
+      <div class="video-card">
+        <div id="video-arduino-1"></div>
+        <div class="video-card-body">
+          <span class="video-card-tag">Arduino · Desafio 1</span>
+          <h2>Iluminação Inteligente</h2>
+          <p>Demonstração do Desafio 1 com Arduino.</p>
+        </div>
+      </div>
+      <div class="video-card">
+        <div id="video-arduino-2"></div>
+        <div class="video-card-body">
+          <span class="video-card-tag">Arduino · Desafio 2</span>
+          <h2>Estacionamento Inteligente</h2>
+          <p>Demonstração do Desafio 2 com Arduino.</p>
+        </div>
+      </div>
+      <div class="video-card">
+        <div id="video-arduino-3"></div>
+        <div class="video-card-body">
+          <span class="video-card-tag">Arduino · Desafio 3</span>
+          <h2>Ambiente Inteligente</h2>
+          <p>Demonstração do Desafio 3 com Arduino.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>Portal Técnico &mdash; Robótica Industrial &amp; Sensores IoT<br>
+  Curso de <span>Internet das Coisas</span> &mdash; SENAI Santa Catarina</p>
+</footer>
+
+<script src="js/video.js"></script>
+<script>
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('nav-links').classList.toggle('open');
+  });
+
+  renderVideo('#video-esp', {
+    source: 'youtube',
+    url: 'https://youtube.com/shorts/92SsBw7lOro',
+    title: 'Demonstração com ESP32'
+  });
+
+  renderVideo('#video-arduino-1', {
+    source: 'youtube',
+    url: 'https://youtu.be/xsrm7AO8uVc',
+    title: 'Arduino Desafio 1'
+  });
+
+  renderVideo('#video-arduino-2', {
+    source: 'youtube',
+    url: 'https://youtu.be/q3nLmZelKnI',
+    title: 'Arduino Desafio 2'
+  });
+
+  renderVideo('#video-arduino-3', {
+    source: 'youtube',
+    url: 'https://youtu.be/yov9PGa2Hv4',
+    title: 'Arduino Desafio 3'
+  });
+</script>
+</body>
+</html>
