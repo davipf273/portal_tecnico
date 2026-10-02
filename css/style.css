@@ -786,3 +786,4 @@ footer span { color: var(--primary); }
 .video-card.shorts-card { max-width: 380px; margin: 0 auto; }
 .video-card.shorts-card .video-embed { aspect-ratio: 9/16; }
 .video-card.shorts-card .video-embed iframe { aspect-ratio: 9/16; height: 100%; }
+
