@@ -41,19 +41,7 @@
     <span class="current">Arduino & ESP</span>
   </div>
 
-  <section class="detail-section">
-    <h2 class="section-title">Projeto com ESP</h2>
-    <div class="video-grid">
-      <div class="video-card shorts-card">
-        <div id="video-esp"></div>
-        <div class="video-card-body">
-          <span class="video-card-tag">ESP</span>
-          <h2>Demonstração com ESP32</h2>
-          <p>Projeto prático utilizando a placa ESP.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+ 
 
   <section class="detail-section">
     <h2 class="section-title">Desafios com Arduino</h2>
@@ -95,12 +83,6 @@
 <script>
   document.getElementById('hamburger').addEventListener('click', () => {
     document.getElementById('nav-links').classList.toggle('open');
-  });
-
-  renderVideo('#video-esp', {
-    source: 'youtube',
-    url: 'https://youtube.com/shorts/92SsBw7lOro',
-    title: 'Demonstração com ESP32'
   });
 
   renderVideo('#video-arduino-1', {
