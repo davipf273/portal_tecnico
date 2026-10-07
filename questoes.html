@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Questões SAEP/ENEM – Portal Técnico</title>
+  <meta name="description" content="Atividade com dez questões contextualizadas no modelo SAEP e ENEM sobre robótica, sensores, Arduino, ESP e programação." />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html"><div class="nav-logo-icon">⚙</div>Portal<span>Técnico</span></a>
+    <button class="hamburger" id="hamburger" aria-label="Abrir menu" aria-expanded="false">☰</button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">⌂ Home</a></li>
+      <li><a href="robots.html">⚙ Catálogo de Robôs</a></li>
+      <li><a href="sensors.html">⚡ Sensores IoT</a></li>
+      <li><a href="desafios.html">🎯 Desafios & Vídeos</a></li>
+      <li><a href="arduino-esp.html">🎬 Arduino & ESP</a></li>
+      <li><a href="questoes.html" class="active">✎ Questões SAEP/ENEM</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="quiz-header">
+  <div class="container">
+    <div class="quiz-kicker">Atividade avaliativa</div>
+    <h1>Questões SAEP/ENEM</h1>
+    <p>Leia cada situação-problema, analise as quatro alternativas e escolha a resposta mais adequada.</p>
+    <div class="quiz-summary" aria-label="Informações da atividade">
+      <span><strong>10</strong> questões</span>
+      <span><strong>4</strong> alternativas</span>
+      <span><strong>1</strong> resposta correta</span>
+    </div>
+  </div>
+</header>
+
+<main class="container quiz-main">
+  <div class="quiz-progress" aria-label="Progresso da atividade">
+    <div class="quiz-progress-row"><strong>Seu progresso</strong><span id="quiz-progress-text">0 de 10 respondidas</span></div>
+    <div class="quiz-progress-track"><div id="quiz-progress-bar"></div></div>
+  </div>
+
+  <form id="quiz-form" novalidate>
+    <div id="quiz-list"></div>
+    <div class="quiz-submit-wrap">
+      <p>Responda todas as questões antes de finalizar.</p>
+      <button class="btn btn-primary" type="submit" id="submit-quiz">Finalizar e corrigir</button>
+    </div>
+  </form>
+
+  <section class="quiz-result" id="quiz-result" hidden aria-live="polite">
+    <div>
+      <span class="quiz-result-label">Resultado final</span>
+      <strong id="quiz-score">0/10</strong>
+      <span id="quiz-percentage">0% de aproveitamento</span>
+    </div>
+    <p id="quiz-result-message"></p>
+    <button class="btn btn-outline" type="button" id="reset-quiz">Refazer atividade</button>
+  </section>
+</main>
+
+<footer>
+  <p>Portal Técnico &mdash; Robótica Industrial &amp; Sensores IoT<br>Curso de <span>Internet das Coisas</span> &mdash; SENAI Santa Catarina</p>
+</footer>
+
+<script>
+  const menuButton = document.getElementById('hamburger');
+  menuButton.addEventListener('click', () => {
+    const links = document.getElementById('nav-links');
+    const isOpen = links.classList.toggle('open');
+    menuButton.setAttribute('aria-expanded', String(isOpen));
+  });
+</script>
+<script src="js/quiz.js"></script>
+</body>
+</html>
